@@ -8,7 +8,7 @@ function App() {
   const [feedings, setFeeding] = useState<Feeding>();
 
   const URL = process.env.REACT_APP_URL;
-
+  //TODO: after connect to jwt remove this hard codded authorization
   useEffect(() => {
     fetch(`${URL}`, {
       headers: {

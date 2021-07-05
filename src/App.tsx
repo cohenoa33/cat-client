@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, useEffect } from "react";
+import { UserProvider } from "./containers/User";
 
 function App() {
+  const [user, setUser] = useState<User>();
+  const [pet, setPet] = useState<Pet>();
+  const [feedings, setFeeding] = useState<Feeding>();
+
+  const URL = process.env.REACT_APP_URL;
+
+  useEffect(() => {
+    fetch(`${URL}`, {
+      headers: {
+        authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlYjY3Y2Y3NjBiM2EwMzdkZmQ1YmUiLCJpYXQiOjE2MTU4MTI2NzB9.wa1z5wJuXrLR_CMZlJ4gTJAB9UPBW5dhQG2BCnPZHOw`
+      },
+      method: "GET"
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPet({ name: data.name });
+        setUser({ id: data.user });
+        setFeeding({ feedings: data.feedings });
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider user={user}>
+      <div className="container">
+        This is {pet?.name} of user {user?.id}{" "}
+      </div>
+    </UserProvider>
   );
 }
 
 export default App;
+
+interface User {
+  id: string;
+}
+interface Pet {
+  name: string;
+}
+interface Feeding {
+  feedings: any;
+}

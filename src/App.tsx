@@ -11,8 +11,10 @@ function App() {
   //TODO: after connect to jwt remove this hard codded authorization
   useEffect(() => {
     fetch(`${URL}`, {
- 
-      method: "GET"
+      method: "GET",
+      headers: {
+        authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlYjY3Y2Y3NjBiM2EwMzdkZmQ1YmUiLCJpYXQiOjE2MTU4MTI2NzB9.wa1z5wJuXrLR_CMZlJ4gTJAB9UPBW5dhQG2BCnPZHOw`
+      }
     })
       .then((res) => res.json())
       .then((data) => {

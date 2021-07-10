@@ -1,7 +1,11 @@
 export function Button({ addFeeding, wight, type }: Props) {
   return (
-    <button onClick={() => addFeeding(wight, type)}>
-      Add {type} grams ({type})
+    <button
+      className="add-feeding-button"
+      onClick={() => addFeeding(wight, type)}
+    >
+      Add {wight}g
+      <br /> ({type})
     </button>
   );
 }

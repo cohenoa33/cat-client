@@ -14,3 +14,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
 "node-sass": "^6.0.1",
+
+`sass --watch src/sass/style.sass src/App.css`

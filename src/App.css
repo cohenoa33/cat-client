@@ -5,6 +5,21 @@
   overflow: auto;
 }
 
+.delete-button {
+  border: none;
+  background: transparent;
+  color: red;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.add-feeding-button {
+  border: none;
+  font-size: 0.75rem;
+  margin: 0.25rem;
+  border-radius: 0.5rem;
+}
+
 * {
   font-family: "Otomanopee One", sans-serif;
   box-sizing: border-box;

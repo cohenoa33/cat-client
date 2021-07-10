@@ -15,12 +15,12 @@ export function ButtonsContainer({ addFeeding }: Props) {
 }
 
 const buttons: ButtonProps[] = [
-  { wight: 5, type: "Ball" },
-  { wight: 10, type: "Ball" },
-  { wight: 5, type: "Board" },
-  { wight: 10, type: "Board" },
-  { wight: 5.5, type: "automatic feeder" },
-  { wight: 11, type: "automatic feeder" }
+  { wight: 5, type: "ball" },
+  { wight: 10, type: "ball" },
+  { wight: 5, type: "board" },
+  { wight: 10, type: "board" },
+  { wight: 5.5, type: "auto" },
+  { wight: 11, type: "auto" }
 ];
 
 interface ButtonProps {

@@ -7,18 +7,21 @@ export function FeedingByDay({ feedings, date, deleteFeeding }: Props) {
   return (
     <div>
       <br />
-      Date: {date}
+      Date: {date} Total: {sumFromFeedingArray(feedings)}g
       <ul>
         {feedings.map((feeding: Feeding) => (
           <li key={feeding._id}>
-            {feeding.weight} grams @ {getTime(feeding.created)} <br />
-            {feeding.foodType} from {feeding.feedingType}
-            <br />
-            <button onClick={() => deleteFeeding(feeding._id)}>Delete</button>
+            {feeding.weight}g @{getTime(feeding.created)} ({feeding.feedingType}
+            )
+            <button
+              className="delete-button"
+              onClick={() => deleteFeeding(feeding._id)}
+            >
+              X
+            </button>
           </li>
         ))}
       </ul>
-      Total: {sumFromFeedingArray(feedings)}
       <br />
     </div>
   );

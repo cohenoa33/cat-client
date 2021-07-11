@@ -8,9 +8,10 @@
 .delete-button {
   border: none;
   background: transparent;
-  color: red;
+  color: #db0202;
+  outline: none;
   font-weight: bold;
-  font-size: 0.75rem;
+  border-radius: 0.5rem;
 }
 
 .add-feeding-button {
@@ -20,9 +21,19 @@
   border-radius: 0.5rem;
 }
 
+.edit-button {
+  border: none;
+  background: transparent;
+  color: #029155;
+  outline: none;
+  font-weight: bold;
+  border-radius: 0.5rem;
+}
+
 * {
   font-family: "Otomanopee One", sans-serif;
   box-sizing: border-box;
+  color: #222222;
 }
 
 html, body {

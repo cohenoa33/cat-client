@@ -3,6 +3,7 @@ export interface User {
 }
 export interface Pet {
   name: string;
+  id: string;
 }
 export interface Feeding {
   created: string;

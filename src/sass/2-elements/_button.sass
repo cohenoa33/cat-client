@@ -1,11 +1,12 @@
+
 .delete-button
-    border: none
-    background: transparent
-    color: red
-    font-weight: bold
-    font-size: 0.75rem
+    +CRUD-button( $red )
+
 .add-feeding-button
     border: none
     font-size: 0.75rem
     margin: 0.25rem
     border-radius: 0.5rem
+
+.edit-button
+    +CRUD-button($green )

@@ -1,0 +1,13 @@
+=input($min-width)
+    margin: 0.5rem 0
+    padding: 0.25rem
+    box-sizing: border-box
+    width: 10%
+    min-width: $min-width
+    outline: none
+
+input[type=number]
+    +input(2.5rem)
+
+select
+    +input(5rem)

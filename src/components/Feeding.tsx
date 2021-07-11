@@ -39,15 +39,14 @@ export function Feeding({
     return (
       <li key={feeding._id}>
         <input
-          className="number-input"
           type="number"
           min={0.5}
           step="0.5"
           defaultValue={weight}
           name="weight"
           onClick={handleChange}
-        />
-        g @{getTime(feeding.created)} (
+        />{" "}
+        g @{getTime(feeding.created)}{" "}
         <select name="type" onChange={handleChange}>
           <option value="type">{type}</option>
           {types().map((type, index) => (
@@ -56,7 +55,6 @@ export function Feeding({
             </option>
           ))}
         </select>
-        )
         <button
           className="edit-button"
           role="img"

@@ -13,7 +13,8 @@ export function filterFeeding(feedings: Feeding[]) {
       feedingsArray.push({ date: date, feedings: [feeding] });
     }
   }
-  return feedingsArray;
+
+  return feedingsArray.sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export function addFeedingToState(
@@ -34,22 +35,25 @@ export function addFeedingToState(
   return feedingsArray;
 }
 
-export function deleteFeedingFromState(
+export function updateFeedingState(
   feedings: FeedingByDateObject[],
-  deletedFeeding: Feeding
+  feedingToUpdate: Feeding,
+  edit: boolean = false
 ) {
   const feedingsArray = feedings.filter(
-    (feeding) => feeding.date === deletedFeeding.created.slice(0, 10)
-  );
-  const returnArray = feedings.filter(
-    (feeding) => feeding.date !== deletedFeeding.created.slice(0, 10)
+    (feeding) => feeding.date === feedingToUpdate.created.slice(0, 10)
   );
   const dayFeeding = feedingsArray[0].feedings.filter(
-    (feeding) => feeding._id === deletedFeeding._id
+    (feeding) => feeding._id !== feedingToUpdate._id
+  );
+  const returnArray = feedings.filter(
+    (feeding) => feeding.date !== feedingToUpdate.created.slice(0, 10)
   );
 
+  if (edit) dayFeeding.push(feedingToUpdate);
+
   returnArray.push({
-    date: deletedFeeding.created.slice(0, 10),
+    date: feedingToUpdate.created.slice(0, 10),
     feedings: dayFeeding
   });
 

@@ -4,7 +4,7 @@ import { UserProvider } from "./containers/User";
 import {
   filterFeeding,
   addFeedingToState,
-  deleteFeedingFromState
+  updateFeedingState
 } from "./helpers/filter-feeding";
 
 import type { User, Pet, FeedingByDateObject } from "./types";
@@ -24,19 +24,19 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setPet({ name: data.name });
+        setPet({ name: data.name, id: data._id });
         setUser({ id: data.user });
         setFeeding(filterFeeding(data.feedings));
       })
       .catch((error) => console.log(error));
   }, [feedings]);
 
-  function addFeeding(weight: number, type: string, food?: string) {
+  function addFeeding(weight: number, type: string, food: string = "dry") {
     const data = {
-      foodType: "dry",
+      foodType: food,
       feedingType: type,
       weight: weight,
-      pet: "60e34cbc83f8365ed1c84250"
+      pet: pet?.id
     };
     fetch(`http://localhost:8000/api/feedings/create`, {
       method: "POST",
@@ -48,6 +48,33 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         const updatedFeeding = addFeedingToState(feedings, data);
+        setFeeding(updatedFeeding);
+      })
+      .catch((error) => console.log(error));
+  }
+  function updateFeeding(
+    id: string,
+    weight: number,
+    type: string,
+    food: string = "dry"
+  ) {
+    const data = {
+      id: id,
+      foodType: food,
+      feedingType: type,
+      weight: weight
+    };
+
+    fetch(`http://localhost:8000/api/feedings/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedFeeding = updateFeedingState(feedings, data, true);
         setFeeding(updatedFeeding);
       })
       .catch((error) => console.log(error));
@@ -65,7 +92,7 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const updatedFeeding = deleteFeedingFromState(feedings, data);
+        const updatedFeeding = updateFeedingState(feedings, data);
         setFeeding(updatedFeeding);
       })
       .catch((error) => console.log(error));
@@ -77,11 +104,13 @@ function App() {
         <div>
           <ButtonsContainer addFeeding={addFeeding} />
           <br />
-          {feedings.map((feeding: FeedingByDateObject) => (
+          {feedings.map((feeding: FeedingByDateObject, index) => (
             <FeedingByDay
+              key={"day-" + index + "-" + feeding.date}
               feedings={feeding.feedings}
               date={feeding.date}
               deleteFeeding={deleteFeeding}
+              updateFeeding={updateFeeding}
             />
           ))}
         </div>

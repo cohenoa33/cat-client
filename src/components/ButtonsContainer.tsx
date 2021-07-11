@@ -3,8 +3,9 @@ import { Button } from "./Button";
 export function ButtonsContainer({ addFeeding }: Props) {
   return (
     <div>
-      {buttons.map((button) => (
+      {buttons.map((button, index) => (
         <Button
+          key={"button-" + index + "-" + button.type}
           addFeeding={addFeeding}
           wight={button.wight}
           type={button.type}

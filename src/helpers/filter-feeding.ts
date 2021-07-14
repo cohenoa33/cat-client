@@ -1,6 +1,6 @@
 import type { Feeding, FeedingByDateObject } from "../types";
 
-export function filterFeeding(feedings: Feeding[]) {
+export function createFeedingsArray(feedings: Feeding[]) {
   const feedingsArray: FeedingByDateObject[] = [];
 
   for (const feeding of feedings) {
@@ -22,7 +22,7 @@ export function addFeedingToState(
 
   feeding: Feeding
 ) {
-  const feedingsArray = feedings;
+  const feedingsArray = [...feedings];
   const today = new Date().toISOString().slice(0, 10);
 
   const isExist = feedings.find((feeding) => feeding.date === today);
@@ -40,16 +40,15 @@ export function updateFeedingState(
   feedingToUpdate: Feeding,
   edit: boolean = false
 ) {
-  const feedingsArray = feedings.filter(
+  const feedingsArray = [...feedings].filter(
     (feeding) => feeding.date === feedingToUpdate.created.slice(0, 10)
   );
   const dayFeeding = feedingsArray[0].feedings.filter(
     (feeding) => feeding._id !== feedingToUpdate._id
   );
-  const returnArray = feedings.filter(
+  const returnArray = [...feedings].filter(
     (feeding) => feeding.date !== feedingToUpdate.created.slice(0, 10)
   );
-
   if (edit) dayFeeding.push(feedingToUpdate);
 
   returnArray.push({
@@ -57,5 +56,5 @@ export function updateFeedingState(
     feedings: dayFeeding
   });
 
-  return feedingsArray;
+  return returnArray;
 }

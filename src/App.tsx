@@ -2,34 +2,42 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { UserProvider } from "./containers/User";
 import {
-  filterFeeding,
+  createFeedingsArray,
   addFeedingToState,
   updateFeedingState
 } from "./helpers/filter-feeding";
 
 import type { User, Pet, FeedingByDateObject } from "./types";
+
 import { FeedingByDay } from "./components/DayFeeding";
 import { ButtonsContainer } from "./components/ButtonsContainer";
+const URL =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_URL
+    : process.env.REACT_APP_URL_PRODUCTION;
+const PET = process.env.REACT_APP_PET;
 
 function App() {
   const [user, setUser] = useState<User>();
   const [pet, setPet] = useState<Pet>();
   const [feedings, setFeeding] = useState<FeedingByDateObject[]>([]);
 
-  const URL = process.env.REACT_APP_URL;
-
   useEffect(() => {
-    fetch(`${URL}`, {
-      method: "GET"
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPet({ name: data.name, id: data._id });
-        setUser({ id: data.user });
-        setFeeding(filterFeeding(data.feedings));
+    const fetchData = async () => {
+      fetch(`${URL}/pets/${PET}`, {
+        method: "GET"
       })
-      .catch((error) => console.log(error));
-  }, [feedings]);
+        .then((res) => res.json())
+        .then((data) => {
+          setPet({ name: data.name, id: data._id });
+          setUser({ id: data.user });
+          setFeeding(createFeedingsArray(data.feedings));
+        })
+        .catch((error) => console.log(error));
+    };
+
+    fetchData();
+  }, []);
 
   function addFeeding(weight: number, type: string, food: string = "dry") {
     const data = {
@@ -38,7 +46,7 @@ function App() {
       weight: weight,
       pet: pet?.id
     };
-    fetch(`http://localhost:8000/api/feedings/create`, {
+    fetch(`${URL}/feedings/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -47,8 +55,8 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const updatedFeeding = addFeedingToState(feedings, data);
-        setFeeding(updatedFeeding);
+        const updatedFeedings = addFeedingToState(feedings, data);
+        setFeeding(updatedFeedings);
       })
       .catch((error) => console.log(error));
   }
@@ -65,7 +73,7 @@ function App() {
       weight: weight
     };
 
-    fetch(`http://localhost:8000/api/feedings/update`, {
+    fetch(`${URL}/feedings/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -74,8 +82,9 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const updatedFeeding = updateFeedingState(feedings, data, true);
-        setFeeding(updatedFeeding);
+        const newFeedings = [...feedings];
+        const updatedFeedings = updateFeedingState(newFeedings, data, true);
+        setFeeding(updatedFeedings);
       })
       .catch((error) => console.log(error));
   }
@@ -83,7 +92,7 @@ function App() {
     const data = {
       id: id
     };
-    fetch(`http://localhost:8000/api/feedings/delete`, {
+    fetch(`${URL}/feedings/delete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -92,11 +101,14 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const updatedFeeding = updateFeedingState(feedings, data);
-        setFeeding(updatedFeeding);
+        const newFeedings = [...feedings];
+        const updatedFeedings = updateFeedingState(newFeedings, data);
+        setFeeding(updatedFeedings);
       })
       .catch((error) => console.log(error));
   }
+
+  console.log(process.env.NODE_ENV, "process.env.NODE_ENV");
 
   return (
     <UserProvider user={user}>

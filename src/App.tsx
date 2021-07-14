@@ -11,10 +11,7 @@ import type { User, Pet, FeedingByDateObject } from "./types";
 
 import { FeedingByDay } from "./components/DayFeeding";
 import { ButtonsContainer } from "./components/ButtonsContainer";
-const URL =
-  process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_URL
-    : process.env.REACT_APP_URL_PRODUCTION;
+const URL = process.env.REACT_APP_URL;
 const PET = process.env.REACT_APP_PET;
 
 function App() {

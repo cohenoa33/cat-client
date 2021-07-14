@@ -1,17 +1,18 @@
 .delete-button {
-  background: #EfEfef;
+  background: transparent;
   border: none;
   color: #ff3b3f;
   outline: none;
   font-weight: bold;
-  border-radius: 50%;
   margin: 0.15rem;
   width: 2.25rem;
   height: 2.25rem;
   padding: 0 0.15rem 0.5rem 0.15rem;
+  margin-left: 1rem;
 }
 .delete-button:hover {
-  background: pink;
+  background: #EfEfef;
+  border-radius: 50%;
 }
 
 .add-feeding-button {
@@ -22,19 +23,19 @@
 }
 
 .edit-button {
-  background: #EfEfef;
+  background: transparent;
   border: none;
   color: #3cc47c;
   outline: none;
   font-weight: bold;
-  border-radius: 50%;
   margin: 0.15rem;
   width: 2.25rem;
   height: 2.25rem;
   padding: 0 0.15rem 0.5rem 0.15rem;
 }
 .edit-button:hover {
-  background: pink;
+  background: #EfEfef;
+  border-radius: 50%;
 }
 
 .container {
@@ -42,6 +43,18 @@
   width: 100%;
   display: block;
   overflow: auto;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal_content {
+  background-color: white;
+  position: absolute;
 }
 
 input[type=number] {
@@ -60,6 +73,7 @@ select {
   width: 10%;
   min-width: 5rem;
   outline: none;
+  margin-right: 0.5rem;
 }
 
 .save-path {

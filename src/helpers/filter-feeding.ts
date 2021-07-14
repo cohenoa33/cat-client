@@ -53,7 +53,7 @@ export function updateFeedingState(
 
   returnArray.push({
     date: feedingToUpdate.created.slice(0, 10),
-    feedings: dayFeeding
+    feedings: dayFeeding.sort((a, b) => a.created.localeCompare(b.created))
   });
 
   return returnArray;
